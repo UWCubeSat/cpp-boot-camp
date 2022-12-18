@@ -7,6 +7,15 @@ A pointer variable stores an address
 Pointers are most commonly used to indirectly access another object at some address
 - Thus, a pointer "points" to whatever data is located at the address it stores
 
+Example:
+```C++
+int x = 333;
+int *p = &x;
+// Print p's value. Here, it's the address of variable x
+std::cout << p << std::endl;
+// prints something like: 0x7fffb2cf5bc0
+```
+
 ---
 ## Declaring a pointer
 
@@ -51,7 +60,7 @@ int *p = 808; // Compiler error
 ```
 
 ---
-## Dereferncing a pointer
+## Dereferencing a pointer
 
 So how do we actually access the object a pointer POINTS to?
 

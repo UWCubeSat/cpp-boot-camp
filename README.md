@@ -9,5 +9,5 @@ Also (hopefully) a nice read for new [Husky Satellite Lab](https://huskysat.org/
 ---
 ## Table of Contents
 
-[src]: src
+- [Pointers](notes/pointer-basics.md)
 

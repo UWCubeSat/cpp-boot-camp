@@ -206,3 +206,6 @@ int main(){
   // Whoops, we're trying to access freed memory...
 }
 ```
+
+---
+See the [next chapter](./smart-pointers-3.md) for one last issue surrounding `shared_ptr`s

@@ -241,4 +241,4 @@ For example, you can write a factory function that returns a unique pointer
 
 Just from looking at one type of smart pointer, the `unique_ptr`, we've resolved all of the issues described in the [first section](#the-problem-with-raw-pointers)
 
-In the next section, we'll look at another type of smart pointer, the `shared_ptr`
+In the [next chapter](./smart-pointers-2.md), we'll look at another type of smart pointer, the `shared_ptr`

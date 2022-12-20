@@ -1,22 +1,40 @@
-# Smart Pointers
+# Smart Pointers, Part 1
 
-We've seen that managing dynamic memory is tricky. It can be difficult to free memory at the right time, leading to memory leaks, double frees, etc.
+## The problem with raw pointers
+
+Raw pointers are tricky to work with due to a variety of reasons
+
+- Its declaration doesn't tell you if the pointer points to a single object or an array
+  - ... do you use `delete` or `delete[]`?
+- Its declaration doesn't tell you if the pointer owns the object it points to
+  - ... should you destroy the pointed-to object after you're done using the pointer?
+- Easy to cause dangling pointers (i.e., objects are destroyed but we still have pointers to them)
+- Easy to cause double frees
+- Easy to cause memory leaks
+
+---
+## Smart pointers to the rescue!
 
 Smart pointers can help us!
 
-**Smart pointer** is an object that stores a pointer to a heap-allocated object
+A **smart pointer** is an object that stores a pointer to a heap-allocated object
+- Think of them as wrappers around raw pointers
 - Smart pointers look and behave like regular pointers
 
-However, smart pointers automatically delete the object to which it points, at the right time
+However, smart pointers can automatically delete the object to which it points, at the right time
 
-Let's take a look at several kinds of smart pointers
+Let's take a look at 3 kinds of smart pointers
 
 ---
 ## `std::unique_ptr`
 
 A `unique_ptr` is a kind of smart pointer
+- Use this for managing resources with exclusive ownership semantics
+- Very little overhead, can be used even when memory is limited
 
-It will take ownership of a pointer to an object. The `unique_ptr`'s destructor will invoke `delete` on the owned pointer when the `unique_ptr` object is destroyed
+Since it is a kind of smart pointer, a unique pointer will take ownership of a pointer to an object
+
+The `unique_ptr`'s destructor will invoke `delete` on the owned pointer when the `unique_ptr` object is destroyed
 
 Example:
 ```C++
@@ -48,7 +66,7 @@ For unique pointer `x`:
 `x.reset(ptr)`: run `delete` on the current owned pointer, then store a new one, `ptr`
 
 `x.release()` returns the pointer, sets wrapped pointer to `nullptr`
-- Releases responsibility for freeing
+- Releases responsibility for explicitly freeing back to user
 
 Example:
 ```C++
@@ -95,7 +113,7 @@ z = x; // Compiler error - copy-assignment disabled
 ```
 
 ---
-## Careful! `unique_ptr` bugs
+## Bug #1
 
 We've seen that you can't copy unique pointers, but you can still wrap the same raw pointer with multiple unique pointers. This causes a problem
 
@@ -113,6 +131,23 @@ int main() {
 - When `y` falls out of scope, it will call `delete` on `p`, which it owns
 - But then when `x` falls out of scope, it also will call `delete` on `p`, which has already been deleted!
 - Causes a double-free!
+
+---
+## Bug #2
+
+Also remember that smart pointers are intended to wrap raw pointers to HEAP-ALLOCATED memory
+
+You should never try to `delete` memory on the stack anyways
+
+Bugged example:
+```C++
+int main(){
+  int x = 333;
+  std::unique_ptr<int> p(&x); // BUG
+}
+```
+- This will still compile
+- However, `&x` is a pointer to memory on the stack, so trying to `delete` it will cause undefined behavior
 
 
 ---
@@ -177,7 +212,7 @@ int main(){
 ```
 
 ---
-`unique_ptr` and Arrays
+## `unique_ptr` and arrays
 
 One last thing about unique pointers- they can also wrap arrays
 
@@ -187,13 +222,20 @@ std::unique_ptr<int[]> x(new int[5]);
 
 When `x` is destroyed, it will call `delete[]` appropriately on its owned pointer
 
+Note: instead of using a `std::unique_ptr` for arrays, it might be better to use `std::array` or `std::vector`
+
 ---
+## Conversion to `std::shared_ptr`
 
-## `std::shared_ptr`
+`std::unique_ptr` can be converted into a `std::shared_ptr`
+- More on shared points in [Smart Pointers Part 2](./smart-pointers-2.md)
 
-Let's look at shared pointers!
+For example, you can write a factory function that returns a unique pointer
 
-These are similar to unique pointers, but now we allow objects to be shared / "owned" by multiple shared pointers
 
-If multiple shared pointers can own an object at the same time, how do we know when to `delete` the pointed-to object?
+---
+## Moving on!
 
+Just from looking at one type of smart pointer, the `unique_ptr`, we've resolved all of the issues described in the [first section](#the-problem-with-raw-pointers)
+
+In the next section, we'll look at another type of smart pointer, the `shared_ptr`

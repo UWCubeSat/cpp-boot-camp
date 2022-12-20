@@ -96,7 +96,7 @@ we would interpret it as
 
 <div style="text-align: center", size="4">
 
-"I have 64<sub>10</sub> sheep" (That's even more)
+"I have 64<sub>10</sub> cousins" (That's even more)
 
 </div>
 

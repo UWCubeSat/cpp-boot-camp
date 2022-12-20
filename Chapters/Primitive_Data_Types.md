@@ -24,7 +24,7 @@ Table 1 - Binary Sizes
 Term|Defintion
 :---:|---
 Bit|One Binary Digit
-Byte|Three Binary Digits
+Byte|Eight Binary Digits
 
 <br/>
 
@@ -181,7 +181,7 @@ This guarentees a very good accuracy of floats/doubles, but you'll sometimes see
 ___
 These have a very simple representation, as they are the equivalent of an unsigned integer with less space. A mapping of char to integer values is shown with the following ASCII table:
 ![](Images/ASCII_Table.png)
-
+<div style="text-align: center"> Figure 1 - ASCII Table</div>
 
 ## Booleans
 ___

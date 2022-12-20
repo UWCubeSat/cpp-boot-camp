@@ -1,5 +1,8 @@
 # Pointers
 
+Contributors: Edward Zhang
+
+---
 A **pointer** is a type of variable
 
 A pointer variable stores an address

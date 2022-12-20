@@ -1,5 +1,8 @@
 # Smart Pointers, Part 1
 
+Contributors: Edward Zhang
+
+---
 ## The problem with raw pointers
 
 Raw pointers are tricky to work with due to a variety of reasons

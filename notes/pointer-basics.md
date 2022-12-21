@@ -3,9 +3,7 @@
 Contributors: Edward Zhang
 
 ---
-A **pointer** is a type of variable
-
-A pointer variable stores an address
+A **pointer** is a type of variable that stores an address
 
 Pointers are most commonly used to indirectly access another object at some address
 - Thus, a pointer "points" to whatever data is located at the address it stores

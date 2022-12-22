@@ -9,6 +9,6 @@ Also (hopefully) a nice read for new [Husky Satellite Lab](https://huskysat.org/
 ---
 ## Table of Contents
 
-- [Representing Numbers](notes/numerical-representations.md)
+- [Numerical Representation](notes/numerical-representations.md)
 - [Primitive Data Types](notes/primitive-data-types.md)
 

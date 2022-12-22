@@ -239,7 +239,7 @@ if(painRating == painRating) {
 ```
 <div style="text-align: center"> Figure 5b - Demonstration of Lack of Type-Safety for Enums </div>
 
-You see, one should not be able to compare these two enums since they are unrelated, but since friday and pain are both 5, they are "equal". To avoid this, C++ introduces the `enum class`, which is a strongly typed and strongly scoped type.
+You see, one should not be able to compare these two enums since they are unrelated, but since friday and pain are both 5, they are "equal". To avoid this, C++11 introduces the `enum class`, which is a strongly typed and strongly scoped type.
 
 ```
 /*
@@ -405,6 +405,11 @@ Sutter.contributions = 1000000;
 Sutter.salary = 5047289.45;
 ```
 <div style="text-align: center"> Figure 9c - Seperation of Union Type and Union Variable Declaration </div>
+
+**NOTE:** For variable declarations in C, you must always put the type of entity before your user-defined type:
+- Structures: `struct structName structVarName`
+- Enumerations: `enum enumName enumVarName`
+- Unions: `union unionName unionVarName`
 
 ## Type Definitions (`typedef`)
 ___

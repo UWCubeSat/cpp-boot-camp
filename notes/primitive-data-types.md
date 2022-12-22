@@ -63,7 +63,7 @@ Big Endian | The data is organized from left to right, so the MSB is to the left
 
 ## Integers
 ___
-Integers are a bit more complicated than you would think. A positive integer would be represented how you think it would, using the normal conversion discussed in **Numerical Representation**. If an integer is defined in code such that it only supports positive numbers, it is called *unsigned*.
+Integers are a bit more complicated than you would think. A positive integer would be represented how you think it would, using the normal conversion discussed in [Numerical Representation](notes/numerical-representations.md). If an integer is defined in code such that it only supports positive numbers, it is called *unsigned*.
 
 But what about negative integers, or *signed* integers? What happens is that the Most Significant Bit (MSBit) is used to indicate the sign of the digit (1 for negative, 0 for positive). However, it will be in the interest of the computer to be able to directly add binary numbers together, but unfortunately, manipulating the MSBit alone won't cut it.
 

@@ -1,20 +1,22 @@
 # Numerical Representation
 
+Contributors: Tri Nguyen
+
 ## Introduction to Numbers
-___
+
 Numbers form a point of interest in every culture. Sayings like "third times the charm", "four is an unlucky number", or "thirteen is cursed" are things some of us may have heard before.
 
 Therefore, the title of this may sound silly, but let's think for a moment and ask ourselves a question: Why do we represent numbers the way we do? To be more specific, let's look at a following number:
 
 <div style="text-align: center", size="4">
 
-5,973 
+5,973
 
 </div>
 
 What do each of these digits mean though? Let's write out the full breakdown of the number:<br />
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 $$5\times10^3+9\times10^2+7\times10^1+3\times10^0$$
 
@@ -22,7 +24,7 @@ $$5\times10^3+9\times10^2+7\times10^1+3\times10^0$$
 
 So let's think about this system we have today. The number of digits we have is 10, ranging from 0 to 9, each "place" is a power of 10, and the places obviously increase by 1 each time. This system is called *decimal* for its use of 10.
 
-This seems like an obvious mathematical fact, but why? Have you ever questioned this format? Specifically, why do we use 10 for all of these? 
+This seems like an obvious mathematical fact, but why? Have you ever questioned this format? Specifically, why do we use 10 for all of these?
 
 The answer lies in the fact that humans have 10 fingers. From the Chinese to the Arabs to the Romans, every ancient civilization has always counted numbers this way because we have 10 figures, toes, or *digits*. Because of this, many areas of our life rely on this simple fact, from money, politics, and culture.
 
@@ -41,7 +43,7 @@ Let's assert that the new species *alans machinicus* has 2 fingers. We therefore
 
 Now let's break this down. Since they only have 2 fingers, they only have 2 options for digits, where we have chosen 0 and 1. Their "places" will be in powers of 2, and the powers will still increase sequentially, so the breakdown is
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 $$1\times2^7+0\times2^6+0\times2^5+1\times2^4+1\times2^3+0\times2^2+1\times2^1+0\times2^0$$
 
@@ -73,7 +75,7 @@ In this case:
 
 Ignore this if you don't want to nerd out, but the *alans machinicus* would actually expand the above number as:
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 $$1_2\times10_2 ^{111_2}+0_2\times10_2^{110_2}+0_2\times10_2^{101_2}+1_2\times10_2^{100_2}+1_2\times10_2^{11_2}+0_2\times10_2^{10}+1_2\times10_2^1+0_2\times10_2^0$$
 
@@ -110,7 +112,7 @@ F94A23C5<sub>16</sub>
 
 can be represented as
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 $$15\times16^7+9\times16^6+4\times16^5+10\times16^4+2\times16^3+3\times16^2+12\times16^1+5\times16^0$$
 
@@ -118,7 +120,7 @@ $$15\times16^7+9\times16^6+4\times16^5+10\times16^4+2\times16^3+3\times16^2+12\t
 
 or
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 F94A23C5<sub>16</sub> = 4,182,385,605<sub>10</sub>
 
@@ -131,7 +133,7 @@ Let's say we have a number in base N. The possible digits range from 0 to N - 1,
 
 One last thing though - You'll run into binary and hexdecimal (And decimal obviously) when working with code at one point or another, and so within coding, they earn a special notation for their numbers. For binary, it is
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 0bNumber
 
@@ -139,7 +141,7 @@ One last thing though - You'll run into binary and hexdecimal (And decimal obvio
 
 in decimal
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 0dNumber
 
@@ -147,7 +149,7 @@ in decimal
 
 and in hexdecimal
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 0xNumber
 
@@ -155,7 +157,7 @@ and in hexdecimal
 
 As a final example, let's represent the number 9,096 in all the systems we've learned, in this format!
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 0b10001110001000 = 0d9096 = 0x2388
 

@@ -1,5 +1,6 @@
 # Primitive Data Types
 
+Contributors: Tri Nguyen
 
 ## Introduction
 ___
@@ -64,14 +65,14 @@ Big Endian | The data is organized from left to right, so the MSB is to the left
 ___
 Integers are a bit more complicated than you would think. A positive integer would be represented how you think it would, using the normal conversion discussed in **Numerical Representation**. If an integer is defined in code such that it only supports positive numbers, it is called *unsigned*.
 
-But what about negative integers, or *signed* integers? What happens is that the Most Significant Bit (MSBit) is used to indicate the sign of the digit (1 for negative, 0 for positive). However, it will be in the interest of the computer to be able to directly add binary numbers together, but unfortunately, manipulating the MSBit alone won't cut it. 
+But what about negative integers, or *signed* integers? What happens is that the Most Significant Bit (MSBit) is used to indicate the sign of the digit (1 for negative, 0 for positive). However, it will be in the interest of the computer to be able to directly add binary numbers together, but unfortunately, manipulating the MSBit alone won't cut it.
 
 ----------------
 Example 1:
 
 Let's say we're using an 4 bit integer. Its really 3 bits since one is used for the sign. Let us say we want to subtract 4 and 3 in binary. There's two ways of doing this. We can simply subtract them
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 $$0100_2-0011_2 = 0001_2 = 1_{10}$$
 
@@ -80,7 +81,7 @@ $$0100_2-0011_2 = 0001_2 = 1_{10}$$
 
 However, if we add 4 and -3, watch what happens:
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 $$0100_2+1011_2 = 1111_2 = -7_{10}$$
 
@@ -98,7 +99,7 @@ Therefore, we need to change up the representation of the negative numbers in ad
 
 If you know the notation for this, it would be:
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 $$!(b_2)<<1$$
 
@@ -109,7 +110,7 @@ This works regardless of whether b<sub>2</sub> is positive or negative.
 
 In C++, you can represent Integers in many different ways. They can be *unsigned* (*signed* by default), and you can also make them different lengths (8, 16, 32, or 64). For a size N, the syntax is of the form:
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 `intN_t` (*signed*)
 
@@ -120,7 +121,7 @@ In C++, you can represent Integers in many different ways. They can be *unsigned
 
 For any size N, the range of numbers an integer can represent in decimal is:
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 *Signed*: -2<sup>N/2</sup> to 2<sup>N/2 - 1</sup>
 
@@ -132,7 +133,7 @@ For any size N, the range of numbers an integer can represent in decimal is:
 ___
 Floats are actually quite different. As a first, these are always signed. But secondly, representing them is very different. We need to form an equivalent to the integer case, so take the decimal number
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 15.72
 $$1\times10^1+5\times10^0+7\times10^{-1}+2\times10^{-2}$$
@@ -168,7 +169,7 @@ This is the weakness of a float/double, since they will never be able to accurat
 
 This is arranged such that the resulting float/double number is:
 
-<div style="text-align: center"> 
+<div style="text-align: center">
 
 $$(-1)^{S_2}\times10^{E_2 - O_2}\times(1.M)_2$$
 
@@ -180,7 +181,7 @@ This guarentees a very good accuracy of floats/doubles, but you'll sometimes see
 ## Characters
 ___
 These have a very simple representation, as they are the equivalent of an unsigned integer with less space. A mapping of char to integer values is shown with the following ASCII table:
-![](Images/ASCII_Table.png)
+![](../images/ascii-table.png)
 <div style="text-align: center"> Figure 1 - ASCII Table</div>
 
 ## Booleans

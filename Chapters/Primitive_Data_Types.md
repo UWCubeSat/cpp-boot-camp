@@ -32,11 +32,11 @@ Generally, the sizes of primitives come in different quantities depending on you
 
 <br/>
 
-Table 2 - Common Type Sizes
+Table 2 - Common Type Sizes for 64-bit Systems
 Type|Size (Bytes)
 :---:|---
 Boolean (`bool`) | 1
-Character (`char`) | 2
+Character (`char`) | 1
 Integer (`int`) | 4
 Float (`float`) | 4
 Double (`double`) | 8

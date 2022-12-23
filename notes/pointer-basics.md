@@ -116,7 +116,8 @@ long *r = ...
 
 // Note: the "..." isn't valid C code, just filler
 // For the purposes of the example, let's assume:
-// p has value = 1000, q = 2000, r = 3000
+// p has value = 0x1000, q = 0x2000, r = 0x3000
+// Remember the value of a pointer variable is some address
 
 p += 3;
 q += 3;
@@ -127,7 +128,7 @@ r += 3;
 ```
 
 Answer:
-- `p = 1003, q = 2012, r = 3024`
+- `p = 0x1003, q = 0x2012, r = 0x3024`
 
 
 Why?
@@ -137,6 +138,7 @@ First, the type of the object a pointer points to matters. In the above example,
 You might've already guessed the pattern. In general, for `typeName* ptrName`, the expression `ptrName + k` really evalutes to `ptrName + k * sizeof(typeName)`
 
 So in the above example `r + 3` would be the same as `r + 3*sizeof(long) = r + 3*8 = 3000 + 24 = 3024`
+- Intuitively, this means we are moving the pointer right by 3 `long`s worth of memory
 
 
 ---

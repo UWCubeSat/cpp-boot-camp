@@ -1,4 +1,4 @@
-# Smart Pointers, Part 1
+# Smart Pointers, Part 1: unique pointers
 
 Contributors: Edward Zhang
 
@@ -39,6 +39,12 @@ Since it is a kind of smart pointer, a unique pointer will take ownership of a p
 
 The `unique_ptr`'s destructor will invoke `delete` on the owned pointer when the `unique_ptr` object is destroyed
 
+General syntax:
+```
+std::unique_ptr<typeName> varName(p)
+```
+- Where `p` is a pointer of type `typeName*` to heap-allocated memory
+
 Example:
 ```C++
 #include <iostream> // std::cout, std::endl
@@ -61,15 +67,12 @@ void foo(){
 
 For unique pointer `x`:
 
-`x.get()` returns a pointer to the pointed-to object
-
-`*x` returns value of pointed-to object
-- Basically normal dereference
-
-`x.reset(ptr)`: run `delete` on the current owned pointer, then store a new one, `ptr`
-
-`x.release()` returns the pointer, sets wrapped pointer to `nullptr`
-- Releases responsibility for explicitly freeing back to user
+| Function 	| Purpose 	|
+|---	|---	|
+| `x.get()` 	| Returns a pointer to the pointed-to object 	|
+| `*x` 	| Returns value of pointed-to object, basically normal dereference 	|
+| `x.reset(ptr)` 	| Run `delete` on the current owned pointer, then store a new one, `ptr` 	|
+| `x.release()` 	| Returns the pointer, sets wrapped pointer to `nullptr`- releases responsibility for explicitly freeing back to user 	|
 
 Example:
 ```C++
@@ -116,7 +119,7 @@ z = x; // Compiler error - copy-assignment disabled
 ```
 
 ---
-## Bug #1
+## Bug #1: double free
 
 We've seen that you can't copy unique pointers, but you can still wrap the same raw pointer with multiple unique pointers. This causes a problem
 
@@ -150,7 +153,7 @@ int main(){
 }
 ```
 - This will still compile
-- However, `&x` is a pointer to memory on the stack, so trying to `delete` it will cause undefined behavior
+- However, `&x` is a pointer to memory on the stack, so when the unique pointer tries to `delete` it will cause undefined behavior
 
 
 ---

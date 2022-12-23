@@ -11,4 +11,8 @@ Also (hopefully) a nice read for new [Husky Satellite Lab](https://huskysat.org/
 
 - [Representing Numbers](notes/numerical-representations.md)
 - [Primitive Data Types](notes/primitive-data-types.md)
+- [Pointers](notes/pointer-basics.md)
+- Smart pointers:
+    - [Part 1: `unique_ptr`](notes/smart-pointers-1.md)
+    - [Part 2: `shared_ptr`](notes/smart-pointers-2.md)
 

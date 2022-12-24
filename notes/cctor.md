@@ -31,6 +31,13 @@ public:
 ```
 - The class has one public data member, `int val`
 
+General syntax for copy constructor:
+```
+className(const className& other){
+  // make a copy of each data member
+}
+```
+
 We can see that the first parameter of a cctor is a REFERENCE to some existing object of the same type
 - ... why must it be a reference? We'll come back to this near the end of the chapter
 
@@ -247,6 +254,7 @@ Node::Node(const Node& other){
 ## Danger of synthesized cctor
 
 Let's assume that once an object falls out of scope, it will magically call `delete` or `delete[]` on any data members that are pointers to heap-allocated memory.
+- See the chapter on destructors
 
 In our `Node` class (second version), we assumed that `rank` is indeed a pointer to an `int` object on the heap
 

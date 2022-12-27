@@ -29,11 +29,11 @@ Byte|Eight Binary Digits
 
 <br/>
 
-Generally, the sizes of primitives come in different quantities depending on your system. However, they typically follow this ratio:
+Generally, the sizes of primitives come in different quantities depending on your system. Below is the type sizes for 64-bit system, which will be used throughout this entire course:
 
 <br/>
 
-Table 2 - Common Type Sizes
+Table 2 - Common Type Sizes for 64-bit systems
 Type|Size (Bytes)
 :---:|---
 Boolean (`bool`) | 1
@@ -49,7 +49,7 @@ ___
 In Western cultures, we take it for granted that we read things from left to right. However, before the meeting between the East and the West (1200 A.D.), many Asian countries read from right to left, and wrote that way too. So that begs the question, which way should computers read information (bytes). Thus, we introduce the following terms:
 
 <br/>
-Table 3 - Endianess
+<div style="text-align: center"> Table 3 - Endianess </div>
 
 Term|Defintion
 :---:|---
@@ -63,7 +63,7 @@ Big Endian | The data is organized from left to right, so the MSB is to the left
 
 ## Integers
 ___
-Integers are a bit more complicated than you would think. A positive integer would be represented how you think it would, using the normal conversion discussed in [Numerical Representation](notes/numerical-representations.md). If an integer is defined in code such that it only supports positive numbers, it is called *unsigned*.
+Integers are a bit more complicated than you would think. A positive integer would be represented how you think it would, using the normal conversion discussed in [Numerical Representation](numerical-representations.md). If an integer is defined in code such that it only supports positive numbers, it is called *unsigned*.
 
 But what about negative integers, or *signed* integers? What happens is that the Most Significant Bit (MSBit) is used to indicate the sign of the digit (1 for negative, 0 for positive). However, it will be in the interest of the computer to be able to directly add binary numbers together, but unfortunately, manipulating the MSBit alone won't cut it.
 

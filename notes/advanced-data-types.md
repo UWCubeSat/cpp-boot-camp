@@ -240,7 +240,7 @@ if(painRating == painRating) {
 <div style="text-align: center"> Figure 5b - Demonstration of Lack of Type-Safety for Enums </div>
 
 You see, one should not be able to compare these two enums since they are unrelated, but since friday and pain are both 5, they are "equal". To avoid this, C++11 introduces the `enum class`, which is a strongly typed and strongly scoped type.
-
+T
 ```
 /*
 enum class enumName {
@@ -448,7 +448,7 @@ Now, when we make `struct` variables, their `myField1` will be integers with 6 b
 
 ## Namespaces (`namespace`)
 
-This is not a data structure, but it is worth mentioning since it somewhat acts as one. Namespaces are entities that can contain types, variables and functions. They are simply a container to contain these things, and they are not `instanceof`-able. Namespaces are declared quite simply.
+This is not a data structure, but it is worth mentioning since it somewhat acts as one. For learning purposes, you may think of namespaces as static, non-inheritable classes. Namespaces are entities that can contain types, variables and functions. They are simply a container to contain these things, and they are not `instanceof`-able. Namespaces are declared quite simply.
 
 ```
 /*

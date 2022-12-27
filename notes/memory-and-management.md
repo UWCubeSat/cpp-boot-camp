@@ -34,7 +34,8 @@ Let's have fun with this grid a bit, since we have the opportunity. Notice how I
 ---
 Problem 1:
 Consider the following code segment corresponding to Figure 2. Let us assume the `int` pointer `p` is established such that it occupies 0x10, that `y` is a `int` pointer, and that `x` is an `int`:
-```
+
+```C++
 // x, y, and p have been initialized
 
 p = (int *) ((char *)p - 16);
@@ -77,7 +78,7 @@ The Instructions block contains the source code that is written out by your code
 
 However, know you know that these entities, or any user-defined element, can be represented in memory, and if so, they must have memory addresses associated with them. We will talk about functions in this case. Let's say we have a function below:
 
-```
+```C++
 int murry(int num1, int num2) {
     return num1 + num2;
 }
@@ -86,7 +87,7 @@ int murry(int num1, int num2) {
 
 It will have a memory address, obtainable by the "address of" operator (`&`). Of course, if we have its address, it must go into a pointer. Therefore, this means we can actually make variables that hold references to functions! This is achieved by the following syntax:
 
-```
+```C++
 // returnType (*myPointerFunctionName)(argType1, argType2, ..., argTypeN) = &myFunctionName;
 
 int (*murryHill)(int, int) = &murry;
@@ -100,7 +101,8 @@ std::cout << murryHill(1, 2); // Output: 3
 As you can see, the pointer can act as the function itself after its declaration and initialization. Of course, the pointer declaration's pointer type, as well as its parameters must match that of the function it is set to.
 
 By this same syntax, you can reason that functions can be used as parameters. In reference to Figure 5, your formal parameter is the left hand side, while the actual parameter is the right hand side, as shown below:
-```
+
+```C++
 /* Function with Function Parameter:
 
 otherReturnType OtherFunction(returnType (*myPointerFunctionName)(argType1, argType2, ..., argTypeN), ...) {
@@ -169,8 +171,7 @@ Some babies actually get some exposure to essential skills before birth through 
 
 Any variable declared outside any control structure, or that uses the modifier `extern` is said to be **Externally Linked**. What this means is that it can be seen outside its own translation unit. Within memory, there is can only be one instance of that variable, and the same applies inside the code. Consider the following 2 file program made up of `helper.cpp` and `main.cpp`
 
-
-```
+```C++
 #include <iostream>
 
 // extern by default, so unneeded in reality
@@ -187,7 +188,7 @@ Figure 5a - `helper.cpp`
 
 </div>
 
-```
+```C++
 #include <iostream>
 
 int sharedInteger  = 1;
@@ -216,7 +217,7 @@ Figure 5b - `main.cpp`
 
 There are some programs you can get with the use of `extern` or rather its implicit use. For example, since there must only be 1 of any external entity, there can never be multiple versions of that entity. For example, the following modification to `main.cpp` produces a compiler, or rather linkage error.
 
-```
+```C++
 #include <iostream>
 
 int sharedInteger = 2; // Error: Cannot make 2 external variables with the same name.
@@ -237,7 +238,7 @@ You also cannot put `extern` variables inside of control structures, since that 
 So, to combat such errors, you may think of using static variables. These variables are seen exclusively by their own translation unit, and as such, there can be multiple versions of them. Consider the following 2 file program made of `kern.cpp` and `brian.cpp`
 
 
-```
+```C++
 #include <iostream>
 
 static int localVar = 1;
@@ -253,7 +254,7 @@ Figure 6a - `kern.cpp`
 
 </div>
 
-```
+```C++
 #include <iostream>
 
 static int localVar = 100;
@@ -282,7 +283,7 @@ However, because of its setup, `static` variables will never be shared by multip
 
 You can even place them inside of control structures too. (This implies that you cannot have 2 or more static variables in the same scope). However, this interaction is more about the persistence of these variables. Consider the following modification to `kern.cpp`
 
-```
+```C++
 #include <iostream>
 
 int kernMain() {
@@ -451,7 +452,7 @@ Problem 2:
 
 Consider the following code:
 
-```
+```C++
 #include <stdlib.h>
 #include <iostream>
 
@@ -499,7 +500,8 @@ Problem 2 shows an example of a **memory leak**. It occured when when `arrayFirs
 Problem 3:
 
 Below is a modifed version of the code from Problem 2. What's wrong with it?
-```
+
+```C++
 #include <stdlib.h>
 #include <iostream>
 
@@ -546,7 +548,8 @@ The error in Problem 2 is known as a **double free** and can occur if you aren't
 Problem 4:
 
 Below is a modifed version of the code from Problem 3. What is wrong with it?
-```
+
+```C++
 #include <stdlib.h>
 #include <iostream>
 

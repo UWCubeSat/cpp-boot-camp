@@ -3,7 +3,7 @@
 Contributors: Tri Nguyen
 
 ## Introduction
-___
+
 Here, we talk about the characteristics of each primitive type, including memory size, storage characteristics and more.
 
 ----------------
@@ -45,7 +45,7 @@ Double (`double`) | 8
 <br/>
 
 ## Endianess
-___
+
 In Western cultures, we take it for granted that we read things from left to right. However, before the meeting between the East and the West (1200 A.D.), many Asian countries read from right to left, and wrote that way too. So that begs the question, which way should computers read information (bytes). Thus, we introduce the following terms:
 
 <br/>
@@ -62,7 +62,7 @@ Big Endian | The data is organized from left to right, so the MSB is to the left
 
 
 ## Integers
-___
+
 Integers are a bit more complicated than you would think. A positive integer would be represented how you think it would, using the normal conversion discussed in [Numerical Representation](numerical-representations.md). If an integer is defined in code such that it only supports positive numbers, it is called *unsigned*.
 
 But what about negative integers, or *signed* integers? What happens is that the Most Significant Bit (MSBit) is used to indicate the sign of the digit (1 for negative, 0 for positive). However, it will be in the interest of the computer to be able to directly add binary numbers together, but unfortunately, manipulating the MSBit alone won't cut it.
@@ -130,7 +130,7 @@ For any size N, the range of numbers an integer can represent in decimal is:
 </div>
 
 ## Floats and Doubles
-___
+
 Floats are actually quite different. As a first, these are always signed. But secondly, representing them is very different. We need to form an equivalent to the integer case, so take the decimal number
 
 <div style="text-align: center">
@@ -179,11 +179,11 @@ This guarentees a very good accuracy of floats/doubles, but you'll sometimes see
 
 
 ## Characters
-___
+
 These have a very simple representation, as they are the equivalent of an unsigned integer with less space. A mapping of char to integer values is shown with the following ASCII table:
 ![](../images/ascii-table.png)
 <div style="text-align: center"> Figure 1 - ASCII Table</div>
 
 ## Booleans
-___
+
 Booleans are quite simple. It is 0 for false and 1 for true, but you'll notice that we use an entire byte for it as opposed to a single bit. This is because since everything else is a whole multiple of a byte, people decided to make it at least a byte too.

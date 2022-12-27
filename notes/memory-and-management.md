@@ -476,7 +476,7 @@ int main() {
     std::cout << "Sum from 1 to 400 as an integer: " << FunctionFirst(400);
     double* same = FunctionSecond(500, 40.0);
     std::cout << "Repeated value: " << same[0];
-    delete same;
+    delete[] same;
     return 0;
 }
 ```
@@ -524,8 +524,8 @@ int main() {
     int* sameFirst = FunctionFirst(400);
     double* sameSecond = FunctionSecond(sameFirst, 400);
     std::cout << "Sum from 1 to 400 as a Double plus 1: " << (double) sameSecond(sameSecond[399]);
-    delete sameFirst;
-    delete sameSecond;
+    delete[] sameFirst;
+    delete[] sameSecond;
     return 0;
 }
 ```
@@ -571,7 +571,7 @@ int main() {
     int* sameFirst = FunctionFirst(400);
     double* sameSecond = FunctionSecond(sameFirst, 400);
     std::cout << "Sum from 1 to 400 as a Double plus 1: " << (double) sameSecond(sameSecond[399]);
-    delete sameFirst;
+    delete[] sameFirst;
     return 0;
 }
 ```

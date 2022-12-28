@@ -133,7 +133,7 @@ Answer:
 
 Why?
 
-First, the type of the object a pointer points to matters. In the above example, `q` points to an int object. `sizeof(int) == 4` on a 64-bit machine
+First, the type of the object a pointer points to matters. In the above example, `q` points to an int object.
 
 You might've already guessed the pattern. In general, for `typeName* ptrName`, the expression `ptrName + k` really evalutes to `ptrName + k * sizeof(typeName)`
 

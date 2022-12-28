@@ -234,7 +234,7 @@ public:
 };
 ```
 - We now have an extra data member `rank`, which has type `int*`
-- Let's assume `rank` is a pointer to an `int` allocated on the heap
+- Since we used `new`, `rank` is a pointer to an `int` allocated on the heap
 - We also got rid of our own cctor
 
 <br>
@@ -256,14 +256,14 @@ Node::Node(const Node& other){
 Let's assume that once an object falls out of scope, it will magically call `delete` or `delete[]` on any data members that are pointers to heap-allocated memory.
 - See the chapter on destructors
 
-In our `Node` class (second version), we assumed that `rank` is indeed a pointer to an `int` object on the heap
+In our `Node` class (second version), `rank` is a pointer to an `int` object on the heap
 
 We also assumed the compiler was kind enough to supply us with the synthesized cctor, since we didn't define our own.
 
 So anything wrong with this code?
 ```C++
 int main(){
-  Node a(333, 1); // rank 1 since 333 is the best
+  Node a(333, 1);
 
   Node x(a); // ok, x is a copy of a
   // we're done right?

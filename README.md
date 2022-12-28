@@ -9,11 +9,12 @@ Also a nice read for new [Husky Satellite Lab](https://huskysat.org/) members!
 ---
 ## Table of Contents
 
-- [Representing Numbers](notes/numerical-representations.md)
+- [Numerical Representation](notes/numerical-representations.md)
 - [Primitive Data Types](notes/primitive-data-types.md)
+- [Advanced Data Types](notes/advanced-data-types.md)
 - [Copy Constructors](notes/cctor.md)
 - [Pointers](notes/pointer-basics.md)
 - Smart pointers:
     - [Part 1: `unique_ptr`](notes/smart-pointers-1.md)
     - [Part 2: `shared_ptr`](notes/smart-pointers-2.md)
-
+- [Memory and Management](notes/memory-and-management.md)

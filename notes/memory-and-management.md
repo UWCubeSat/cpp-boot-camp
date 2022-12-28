@@ -191,7 +191,7 @@ Figure 5a - `helper.cpp`
 ```C++
 #include <iostream>
 
-int sharedInteger  = 1;
+int sharedInteger = 1;
 
 int main() {
     extern doubleSharedDouble = 0.0;
@@ -215,12 +215,12 @@ Figure 5b - `main.cpp`
 
 3. When `main()` runs, it uses a singular `sharedInteger` as we discussed earlier. `sharedInteger` is not different amongs the files, and each file modifies the same `sharedInteger`. Therefore, the output of this program is: 1 2 3 4
 
-There are some programs you can get with the use of `extern` or rather its implicit use. For example, since there must only be 1 of any external entity, there can never be multiple versions of that entity. For example, the following modification to `main.cpp` produces a compiler, or rather linkage error.
+There are some problems you can get with the use of `extern` or rather its implicit use. For example, since there must only be 1 of any external entity, there can never be multiple versions of that entity. For example, the following modification to `main.cpp` produces a compiler, or rather linkage error.
 
 ```C++
 #include <iostream>
 
-int sharedInteger = 2; // Error: Cannot make 2 external variables with the same name.
+int sharedInteger = 2; // Error: Cannot make 2 external variables with the same name, which would form a contradiction between sharedInteger in helper.cpp and shared integerInteger in main.cpp.
 
 void printSharedInteger() {
     sharedInteger++;
@@ -321,6 +321,10 @@ We need to note a few things before we begin. The evolution of heap memory manag
 
 ### Allocating Memory
 
+The heap has several advantages:
+- Since heap memory exists for as long as we want it to, we can use it to store variables that we need across many scopes and functions.
+- As you will later find, allowing the computer to automatically store very large local variables does not always work due to size limitations within the Stack.
+
 To reserve memory within the heap, C will use the function:
 
 <div style="text-align: center">
@@ -411,7 +415,9 @@ Say you also want to change the size of a variable that has previously been allo
 
 </div>
 
-This is the same as `malloc()` except it will allocate the same memory pointed to by `ptr` and more. It typically gets reassigned to `ptr`.
+This is the same as `malloc()` except it will allocate the same memory pointed to by `ptr` and more. It typically gets reassigned to `ptr`. 
+
+However, you should not use this if you can. `realloc()` is a function that is not designed very well and can produce unexpected behavior (Go ahead and search it up if you don't believe me). Its typically better if you can just do a `malloc()`/`calloc()` and `free()` combination if possible.
 
 These are all valid ways to allocate memory to the heap, and note that as Figure 3 points out, the heap grows upward the more memory we put into it, hence the name "heap".
 
@@ -433,7 +439,7 @@ In C++, this is achieved using `delete`:
 
 </div>
 
-However, if it is an array, then we use `delete[]`:
+However, if it is an array, then we use `delete[]`, which is very important because using normal `delete` on an array will only deallocate the first entry:
 
 <div style="text-align: center">
 
@@ -443,7 +449,7 @@ However, if it is an array, then we use `delete[]`:
 
 If objects are properly made, you will never need to delete an object since when they fall out of scope, they will be deleted. However, there is more to them concerning memory management than meets the eye. See the section on Classes for more information.
 
-In C++, you may "mix and match" the uses for allocation and deallocation, so you can `malloc` a pointer and then `delete` it, or any other combination you can think of.
+It is tempting, but do not mix and match the C and C++ versions of allocation/deallocation. This means do not do something like `malloc()` a pointer and then `delete` it, or `new Type()` a pointer and then `free()` it. Since they are from different versions of C/C++, this can produce unexpected behavior.
 
 ### Memory Management Errors
 
@@ -477,7 +483,7 @@ int main() {
     std::cout << "Sum from 1 to 400 as an integer: " << FunctionFirst(400);
     double* same = FunctionSecond(500, 40.0);
     std::cout << "Repeated value: " << same[0];
-    delete[] same;
+    free(same);
     return 0;
 }
 ```
@@ -506,7 +512,7 @@ Below is a modifed version of the code from Problem 2. What's wrong with it?
 #include <iostream>
 
 int* FunctionFirst(int size) {
-    int* arrayFirst = (int *) calloc(sizeof(int) * size);
+    int* arrayFirst = new int[size];
     arrayFirst[0] = 1;
     for(int i = 1; i < size; i++) {
         arrayFirst[i] += 1 + arrayFirst[i - 1];
@@ -574,7 +580,7 @@ int main() {
     int* sameFirst = FunctionFirst(400);
     double* sameSecond = FunctionSecond(sameFirst, 400);
     std::cout << "Sum from 1 to 400 as a Double plus 1: " << (double) sameSecond(sameSecond[399]);
-    delete[] sameFirst;
+    free(sameFirst);
     return 0;
 }
 ```
@@ -618,7 +624,9 @@ On first glance, we have the stack pointer, which is always present and will poi
 - Saved Registers and Local Variables: This is where all variables used by the function will be located
 - Argument Build Area: If the function corresponding to the current frame will call another function, this area is dedicated to holding the parameters for that function.
 
-The frame will store even more things, but in all honesty, what concerns us is the fact that they hold parameters and local variables of each method call. So, its more useful if we think of it more like this:
+The first thing to note is the amount of memory space the stack has. As the structure suggests, there is not a whole lot of room to store any parameters or local variables, so the heap can be used in conjunction with the stack to hold those values at times. 
+
+Second, the frame will store even more things, but in all honesty, what concerns us is the fact that they hold parameters and local variables of each method call. So, its more useful if we think of it more like this:
 
 ![](../images/stack-simplification.png)
 <div style="text-align: center"> 
@@ -636,6 +644,8 @@ Figure 8b - Code Corresponding to Figure 8a
 
 </div>
 
+Can you figure out what line we are at based on Figure 8a? Since i exists and is at value 4, we are within the for loop on its last iteration.
+
 Once `copy()` is done executing, you can imagine that it will dissapear from the stack, and it does. After the line `int* ncopy = copy(nums, 4);` is done executing, the stack pointer will roll back and the stack effectively now looks like this:
 
 ![](../images/stack-no-copy.png)
@@ -646,6 +656,8 @@ Figure 8c - Reduced Frames due to Function Completion
 </div>
 
 Because C/C++ lacks a garbage collector, the frame for `copy()` is still physically there, it simply is just not used anymore.
+
+If you haven't noticed yet, this is why we call it a stack! We can "push" the memories of function calls onto the stack, and we can "pop" it off once we're done.
 
 ### Collision Between the Heap and Stack
 

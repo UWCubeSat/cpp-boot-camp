@@ -256,7 +256,7 @@ Bun b;
 - Variable `b`'s static type is `Bun`, its dynamic type is also `Bun`
 - Another way to put it: a variable of type `Bun` is always a `Bun` object
 
-However, for a pointer or reference, the dynamic type depends on the type of argument to which the pointer/reference is bound
+> However, for a pointer or reference, the dynamic type depends on the type of argument to which the pointer/reference is bound
 
 Example:
 ```C++
@@ -324,11 +324,6 @@ Here's another way to put it: sometimes, the correct function to call can only b
 - Now, which class's `Rank()` function do we call? It depends on the actual type of object being passed in for `ani`!
 - This step can only happen at runtime - our compiler does not know what the actual type of `ani` is until we start running the program and calling the function with arguments
 
-
----
-## Dynamic dispatch
-
-**Dynamic dispatch** is the mechanism that enables dynamic polymorphism. It is a mechanism for selecting which implementation of a function to call at runtime
 
 ---
 Whew! That was a lot of conceptual material. Let's now [move on to the next chapter](inheritance-2.md) and examine function calls in more detail

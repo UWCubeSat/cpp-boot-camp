@@ -15,4 +15,6 @@ Also (hopefully) a nice read for new [Husky Satellite Lab](https://huskysat.org/
 - Smart pointers:
     - [Part 1: `unique_ptr`](notes/smart-pointers-1.md)
     - [Part 2: `shared_ptr`](notes/smart-pointers-2.md)
+- Inheritance:
+    - [Part 1: basics of inheritance](notes/inheritance-1.md)
 

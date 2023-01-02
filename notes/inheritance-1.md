@@ -182,14 +182,128 @@ int main(){
 - Yay, code reuse! This is a lot cleaner and satisfies our needs
 
 ---
+## Derived-to-base conversions
+
+Before we move on, let's first address some important intuition behind inheritance:
+
+> We can use an object of a derived type as if it were an object of its base type
+- Also called derived-to-base conversion
+
+<br>
+
+Let me give an intuitive explanation for why we can perform derived-to-base conversion.
+
+Think of a derived object as containing multiple parts
+1. A subobject contaiing data members inherited from its base class
+2. A subobject containing the members defined in the derived class
+
+Example:
+
+![](../images/inheritance-subobject.PNG)
+
+Since a derived object contains a subpart corresponding to its base class, we can safely use an object of a derived type as if it were an object of its base type
+- Conceptual example: if you needed a Car to drive somewhere, a Tesla would do just fine. Sure, it contains extra functionality specific to a Tesla, but it also has all the properties of a driveable car
+
+---
+## Implications of derived-to-base conversions
+
+Derived-to-base conversion gives us 2 important facts:
+
+> First, we can bind a pointer/reference (to a base-class type) to an object of a type derived from that base class
+
+This is why, in the previous chapter, we could do something like this:
+
+```C++
+void printRank(Animal &ani){
+    std::cout << ani.Rank() << std::endl;
+}
+
+int main(){
+    Animal a;
+    Bun b;
+    KingBun kb;
+    printRank(a); // prints 1
+    printRank(b); // prints 5
+    printRank(kb); // prints 10
+}
+```
+- Since `Bun` and `KingBun` are all derived classes of `Animal`, we can bind a reference (to `Animal`) to an object of type `Bun` or `KingBun`
+
+<br>
+
+Secondly, since we can do this type of binding, when we use a reference or pointer to a base-class type, we don't know the actual type of the object to which the pointer/reference is bound!
+- The object can be an object of the base class or one of its derived classes
+- In the example above, is `ani` bound to an `Animal`, `Bun`, or `KingBun` object? We don't know until runtime!
+
+---
+## Static type vs. Dynamic type
+
+The **static type** of an expression is always known at compile time
+- It is the type with which a variable is declared or that an expression yields
+
+For example, in our `printRank` function, parameter `ani` has static type `Animal&`
+
+<br>
+
+The **dynamic type** is the type of the object in memory that the variable or expression actually represents
+
+The dynamic type of an variable that isn't a reference or pointer is just the same as the variable's static type
+
+Example:
+```C++
+Bun b;
+```
+- Variable `b`'s static type is `Bun`, its dynamic type is also `Bun`
+- Another way to put it: a variable of type `Bun` is always a `Bun` object
+
+However, for a pointer or reference, the dynamic type depends on the type of argument to which the pointer/reference is bound
+
+Example:
+```C++
+void printRank(Animal &ani){
+    // ani's static type is Animal&
+    std::cout << ani.Rank() << std::endl;
+}
+
+int main(){
+    Animal a;
+    Bun b;
+    KingBun kb;
+    printRank(a); // ani's dynamic type is Animal
+    printRank(b); // ani's dynamic type is Bun
+    printRank(kb); // ani's dynamic type is KingBun
+}
+
+```
+
+---
+## Base to derived conversion?
+
+You might be wondering: in C++, are we allowed to convert from a base class object to a derived class object?
+
+Technically yes, you can try using virtual destructors and `std::dynamic_cast` to perform a safe conversion
+
+Generally though, this isn't safe. Think back to our section on [subobjects](#derived-to-base-conversions). Most of the time, there is no guarantee that a base class object contains the members defined by the derived class.
+- Conceptual example: Say you needed the help of [Korosensei](https://ansatsukyoshitsu.fandom.com/wiki/Korosensei), an excellent teacher who can also fly at top speeds of Mach 20. Since I can't guarantee that any random teacher can also fly, I'm not allowed to perform a conversion
+
+Thus, there is no implicit conversion from base to derived
+```C++
+Animal a;
+Bun* bunPtr = &a;  // compile error, cannot convert base to derived
+Bun& bunRef = a; // compile error
+
+```
+
+
+---
 ## Polymorphism
 
-The key concept behind all of this is polymorphism
+The key concept behind this entire chapter is polymorphism
 
 Through polymorphism, a single entity (e.g., a variable, function, or object), can have multiple forms. Most importantly, this allows us to treat objects, which may be of different types, in the same exact way
 - A whole host of benefits arises from using polymorphism: less redundancy, more understandable/modifiable code, etc.
 
-We used this concept to great effect in the above example. Instead of writing the same function for each object of base type `Animal`, we wrote code that allows us to treat all objects of type `Animal` or one of its derived classes in the same exact way!
+We used this concept to great effect in the previous example. Instead of writing the same function for each object of base type `Animal`, we wrote code that allows us to treat all objects of type `Animal` or one of its derived classes in the same exact way!
 
 ---
 ## Types of polymorphism
@@ -204,9 +318,9 @@ You've probably seen a lot of **static polymorphism**, also called **compile-tim
 
 **Dynamic polymorphism**, also called **runtime polymorphism**, is what happened in the earlier `printRank` example. Sometimes, for reasons we will examine in the next chapter, the compiler doesn't know which version of a function to call until runtime
 
-Here's another way to put it: sometime, the correct function to call can only be determined at runtime, depending on the actual type of object that the function is called on
+Here's another way to put it: sometimes, the correct function to call can only be determined at runtime, depending on the actual type of object that the function is called on
 - When we called `printRank()` in `main()`, notice how we were able to pass (as an argument) an object of either type `Animal`, `Bun`, or `KingBun`
-- In `printRank()`, the parameter `ani` has type `Animal&`. We then invoke the virtual function `Rank()` on `ani`
+- In `printRank()`, we invoke the virtual function `Rank()` on parameter `ani`
 - Now, which class's `Rank()` function do we call? It depends on the actual type of object being passed in for `ani`!
 - This step can only happen at runtime - our compiler does not know what the actual type of `ani` is until we start running the program and calling the function with arguments
 
@@ -217,4 +331,4 @@ Here's another way to put it: sometime, the correct function to call can only be
 **Dynamic dispatch** is the mechanism that enables dynamic polymorphism. It is a mechanism for selecting which implementation of a function to call at runtime
 
 ---
-Whew! That was a lot of conceptual material. Let's now [move on to the next chapter](inheritance-2.md) and make all of this make sense.
+Whew! That was a lot of conceptual material. Let's now [move on to the next chapter](inheritance-2.md) and examine function calls in more detail

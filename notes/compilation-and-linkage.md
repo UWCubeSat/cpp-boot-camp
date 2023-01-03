@@ -58,7 +58,7 @@ Be wary that some libraries have files without `.c`, `.cpp`, `.h` or `.hpp`. Als
 
 #### Macros (`#define`, `#undef`)
 
-Macros are definitions used by the preprocessor, and these definitions are held within its registers. You can sort of think of them as variables, if that helps
+Macros are custom literals that have a value associated with them. Whenever you use these macros, the preprocessor replaces them with the value specified. You can sort of think of them as constant variables, if that helps. Here is an example of making some macros:
 
 ```C
 // #define VARIABLE_TYPE_MACRO_NAME MACRO_VALUE
@@ -395,8 +395,8 @@ Let's look at an example implementation. Here we have `point.hpp`, `point.cpp`, 
 #define SHIFT_X = 4;
 #define SHIFT_Y = 5;
 
-#define <iostream>
-#define <string>
+#include <iostream>
+#include <string>
 
 struct point {
     std::string name;
@@ -432,7 +432,7 @@ point DefaultTranslate(std::string name) {
 }
 
 void printString(point p) {
-    std::cout << Coordinate Points for << p.name << ": (" << x << ", " << y << ")" << std::endl;;
+    std::cout << "Coordinate Points for" << p.name << ": (" << x << ", " << y << ")" << std::endl;;
 }
 ```
 <div style="text-align: center">
@@ -466,7 +466,7 @@ A few things happen due to this "abstraction"
 4. Memory - When the preprocessor runs, `point.cpp` and `pointMain.cpp` will have less code copied at the top of their programs.
 5. Completeness - `point.hpp` helps us make sure that we implement everything inside of it. It doesn't give an error if we don't, but there are tools out there that will tell you whether things inside of `.hpp` files have been implemented yet.
 
-However, what if included `iostream` in `pointMain.cpp`? Assuming that it doesn't have what we're about to talk about next, this will cause `iostream` to be repeated inside of `main.cpp`, which is a big problem. So, developers have created something called a header guard, WHICH YOU MUST USE!!! To use a header guard, you can employ the following to all your .hpp files
+However, what if included `iostream` in `pointMain.cpp`? Assuming that it doesn't have what we're about to talk about next, this will cause `iostream` to be repeated inside of `main.cpp`, which is a big problem. So, developers have created something called a header guard, WHICH YOU MUST USE!!! This will prevent the preprocessor from including a file twice within a given piece of code. To use a header guard, you can employ the following to all your .hpp files
 
 ```C++
 /*
@@ -483,8 +483,8 @@ However, what if included `iostream` in `pointMain.cpp`? Assuming that it doesn'
 #define SHIFT_X = 4;
 #define SHIFT_Y = 5;
 
-#define <iostream>
-#define <string>
+#include <iostream>
+#include <string>
 
 struct point {
     std::string name;
@@ -631,28 +631,63 @@ After this, your program is in its final form! You can run your program and it w
 To solve this, C++ introduces a cool feature called dynamic linking. This is a process by which a singular memory space, seperate from the program, is created that any program can use to run. To compile a dynamic library, the same steps are followed, up until the creation of the object file. At compilation, two things happen:
 
 1. The compiler creates a space within the computer's memory that stores the binary code for the given library. This is represented by an object file, so the object file does still get created.
-2. The compiler then creates a special object file, a shared object file (.so or .dll) that contains references to that space in memory.
+2. The compiler then creates a special object file, a shared library object file (.so or .dll) that contains references to that space in memory. We will refer to this as the shared library.
 
-There are a good many ways to do this step, and it varies with what you intend to do with that shared library. However, the simplest way is shown below. For C:
+There are a good many ways to do this step, and it varies with what you intend to do with that shared library. However, the simplest way is shown below.
+
+Typically, you should make a seperate file that contains everything you intend to put into your shared library, into a `.c/.cpp` file (You may also use a header file, just as long as its related to a .c/.cpp file). Unless there is a module you can use to avoid the following syntax, your file that represents this library must use a special structure:
+
+```C++
+// Any Directives
+
+#ifdef __cplusplus
+   extern “C” {
+#endif
+
+// Include Directives
+// Class Declarations
+// Function Declarations
+// Other Declarations
+
+#ifdef __cplusplus
+   }
+#endif
+```
+<div style="text-align: center">
+
+Figure 9 - How to declare a file representing your external library
+
+</div>
+
+
+Some notes here:
+1. The `ifdef/endif` guards are there to prevent multiple definitions of the external library, which is defined as everything within this `extern C {}` structure.
+2. Using `#include` outside of the structure allows you to declare individual entities within `extern C {}`, while doing it inside will declare all entities contained in your included file within `extern C {}`.
+
+To build the shared library, you must compile it, along with anything you included, into the special shared object file.
+
+For C:
 
 <div style="text-align: center">
 
-`gcc [optionalFlags] -shared myCFile1.c myCFile2.c ... myCFileN.c -o mySharedLibraryName.so
+`gcc [optionalFlags] -shared myCFile1.c myCFile2.c ... myCFileN.c -o mySharedLibraryName.so`
 </div>
 
 For C++:
 
 <div style="text-align: center">
 
-`g++ [optionalFlags] -shared myCPPFile1.cpp myCPPFile2.cpp ... myCPPFileN.cpp -o mySharedLibraryName.so
+`g++ [optionalFlags] -shared myCPPFile1.cpp myCPPFile2.cpp ... myCPPFileN.cpp -o mySharedLibraryName.so`
 
 </div>
 
-Then, after this, must statically link this shared library. Don't worry, this since this shared library file only has memory address mappings, its quite small compared to its counterpart. This needs to happen so the program know it exists. For C:
+Note how all the C/C++ files we must include are all the files we `#include`d within the external library file.
+
+Then, after this, we must statically link this shared library. Don't worry, this since this shared library file only has memory address mappings, its quite small compared to its counterpart. This needs to happen so the program know it exists. For C:
 
 <div style="text-align: center">
 
-`gcc [optionalFlags] -o executableName objectFile1.o objectFile2.o ... objectFileN.o mySharedLibrary.so [otherLibraries]`
+`gcc -L<path to .so file> [optionalFlags] -o executableName objectFile1.o objectFile2.o ... objectFileN.o [otherLibraryFlags] -l<sharedLibraryName>`
 
 </div>
 
@@ -660,15 +695,25 @@ For C++:
 
 <div style="text-align: center">
 
-`g++ [optionalFlags] -o executableName objectFile1.o objectFile2.o ... objectFileN.o mySharedLibrary.so [otherLibraries]`
+`g++ -L<path to .so file> [optionalFlags] -o executableName objectFile1.o objectFile2.o ... objectFileN.o [otherLibraryFlags] -l<sharedLibraryName>`
 
 </div>
 
-After you run your program and it runs into a definition/instruction used in the shared library, it will go to that small, statically linked part of the program's memory that maps to the library's actual contents, go to it, and resolve and run the required code at runtime! So, some thoughts about this:
+To actually link the `.so` file, we need to specify where that flag (`-lsharedLibraryNameOnly`) points to. We need to use a special linux command to specify what the flag points to.
+
+<div style="text-align: center">
+
+`export LD_LIBRARY_PATH=<path to .so file>:$LD_LIBRARY_PATH`
+
+</div>
+
+After that, you can run your program. When it runs into a definition/instruction used in the shared library, it will go to that small, statically linked part of the program's memory that maps to the library's actual contents. It will follow the mapping and resolve and run the required code at runtime! This has some effects:
 
 1. Memory for the Program - The program can now use a lot more memory for the code that you wrote.
 2. Memory across Programs - If multiple programs need this library, they all can statically link the `.so` file, and that will allow them access to a singular shared library (hence the name)
 3. Use - If the program does not use the shared library too much, the memory benefits will outweigh the cost for time needed to resolve the shared library. If not, well then, you should statically link your library.
+
+This is a very confusing topic, so I encourage you to read more about it. It is good to know, but as far as I currently know, it is not used within LOST. To see a working example of this, visit [this site](https://iq.opengenus.org/create-shared-library-in-cpp/#:~:text=There%20are%20four%20steps%3A%201%20Compile%20C%2B%2B%20library,Step%201%3A%20Compile%20C%20code%20to%20object%20file).
 
 ## In Conclusion
 
@@ -679,6 +724,6 @@ This is a very long chapter, and though after the preprocessor, the information 
 
 ![](../images/g%2B%2B-compilation-process-2.png)
 
-Figure 9 - C/C++ Compilation In Summary
+Figure 10 - C/C++ Compilation In Summary
 
 </div>

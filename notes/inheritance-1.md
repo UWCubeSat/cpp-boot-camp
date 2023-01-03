@@ -198,7 +198,7 @@ int main(){
 
 Before we move on, let's first address some important intuition behind inheritance:
 
-> We can use an object of a derived type as if it were an object of its base type
+<mark>We can use an object of a derived type as if it were an object of its base type</mark>
 - Also called derived-to-base conversion
 
 <br>
@@ -221,7 +221,7 @@ Since a derived object contains a subpart corresponding to its base class, we ca
 
 Derived-to-base conversion gives us 2 important facts:
 
-> First, we can bind a pointer/reference (to a base-class type) to an object of a type derived from that base class
+<mark>First, we can bind a pointer/reference (to a base-class type) to an object of a type derived from that base class</mark>
 
 This is why, in the previous chapter, we could do something like this:
 
@@ -276,7 +276,7 @@ Bun b;
 - Variable `b`'s static type is `Bun`, its dynamic type is also `Bun`
 - Another way to put it: a variable of type `Bun` is always a `Bun` object
 
-> However, for a pointer or reference, the dynamic type depends on the type of argument to which the pointer/reference is bound
+<mark>However, for a pointer or reference, the dynamic type depends on the type of argument to which the pointer/reference is bound</mark>
 
 Example:
 ```C++

@@ -23,7 +23,17 @@ Examples:
 - A Tesla "is a" Car
 - A Husky "is a" Dog
 - LOST "is a" StarTracker
-- [Korosensei](https://ansatsukyoshitsu.fandom.com/wiki/Korosensei) "is a" Teacher
+- [TentacledHomeroomTeacher](https://ansatsukyoshitsu.fandom.com/wiki/Korosensei) "is a" Teacher
+
+<details>
+<summary>Korosensei</summary>
+<br>
+
+In the same way `Kleenex` is technically an instance of the class named `Tissue`, but now it's so popular we just use it synonomously with its class name, I'd argue `Korosensei` is synonoymous with `TentacledHomeroomTeacher` at this point
+
+Exercise for the reader: find me another tentacled homeroom teacher if you can
+</details>
+
 
 <br>
 
@@ -33,8 +43,10 @@ In C++, we call a parent class the **base class**, and a child class the **deriv
 ## Why would we want inheritance?
 
 There are quite a few benefits that arise from using inheritance when appropriate:
-- **Polymorphism**: children can redefine existing behavior while preserving the interface
-    - Example: all 2D shapes have area. A circle is a shape, but we redefine its area to be $\pi r^2$
+- **Polymorphism**: we can treat objects of different types in the same manner
+    - This is possible since children can redefine existing behavior while preserving the interface
+    - Example: all 2D shapes have area. A circle is a shape, but we redefine its area to be $\pi r^2$. If we wanted to write a function that printed out a shape's area, we can write one piece of code that deals with every type of `Shape`!
+    - We'll see an example of this later
 - Code reuse: children can automatically inherit functionality from their parents without having to rewrite the same code over and over
     - Example: pretend that all Animals can say "Hi". Then there's no point in rewriting this code for every derived class of `Animal`
 - Extensibility: children can specify / add new behavior
@@ -194,7 +206,7 @@ Before we move on, let's first address some important intuition behind inheritan
 Let me give an intuitive explanation for why we can perform derived-to-base conversion.
 
 Think of a derived object as containing multiple parts
-1. A subobject contaiing data members inherited from its base class
+1. A subobject containing data members inherited from its base class
 2. A subobject containing the members defined in the derived class
 
 Example:
@@ -238,10 +250,18 @@ Secondly, since we can do this type of binding, when we use a reference or point
 ---
 ## Static type vs. Dynamic type
 
-The **static type** of an expression is always known at compile time
-- It is the type with which a variable is declared or that an expression yields
+The **static type** is the type with which a variable is declared or that an expression yields
+- The static type of an expression is always known at compile time
 
-For example, in our `printRank` function, parameter `ani` has static type `Animal&`
+Example:
+```C++
+Animal a;
+Bun b;
+```
+- Variable `a` has static type `Animal`
+- Variable `b` has static type `Bun`
+
+Also as another example, in our `printRank` function, parameter `ani` has static type `Animal&`
 
 <br>
 
@@ -275,15 +295,16 @@ int main(){
 }
 
 ```
+The above example is important!
+- We said earlier that `printRank`'s parameter `ani` has static type `Animal&`
+- However, its dynamic type can be `Animal`, `Bun`, or `KingBun`
 
 ---
 ## Base to derived conversion?
 
-You might be wondering: in C++, are we allowed to convert from a base class object to a derived class object?
+You might be wondering: in C++, is it safe to implicitly convert from a base class object to a derived class object?
 
-Technically yes, you can try using virtual destructors and `std::dynamic_cast` to perform a safe conversion
-
-Generally though, this isn't safe. Think back to our section on [subobjects](#derived-to-base-conversions). Most of the time, there is no guarantee that a base class object contains the members defined by the derived class.
+Generally no. Think back to our section on [subobjects](#derived-to-base-conversions). Most of the time, there is no guarantee that a base class object contains the members defined by the derived class.
 - Conceptual example: Say you needed the help of [Korosensei](https://ansatsukyoshitsu.fandom.com/wiki/Korosensei), an excellent teacher who can also fly at top speeds of Mach 20. Since I can't guarantee that any random teacher can also fly, I'm not allowed to perform a conversion
 
 Thus, there is no implicit conversion from base to derived
@@ -313,6 +334,7 @@ There are 2 main types of polymorphism: static polymorphism and dynamic polymorp
 You've probably seen a lot of **static polymorphism**, also called **compile-time polymorphism**. This is just regular function overloading!
 - When multiple functions have the same name but different signatures, the compiler will pick which one to call based on the arguments passed
 - This happens at compile-time
+- This is what we abused when we wrote the redundant version of `printRank`
 
 <br>
 

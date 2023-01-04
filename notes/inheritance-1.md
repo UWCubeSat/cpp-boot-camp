@@ -332,9 +332,9 @@ We used this concept to great effect in the previous example. Instead of writing
 There are 2 main types of polymorphism: static polymorphism and dynamic polymorphism
 
 You've probably seen a lot of **static polymorphism**, also called **compile-time polymorphism**. This is just regular function overloading!
+- We abused function overloading, aka static polymorphism, when we wrote the [first redundant version of `printRank`](#example-motivation-for-polymorphism)
 - When multiple functions have the same name but different signatures, the compiler will pick which one to call based on the arguments passed
 - This happens at compile-time
-- This is what we abused when we wrote the redundant version of `printRank`
 
 <br>
 

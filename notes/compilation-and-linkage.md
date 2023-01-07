@@ -577,6 +577,9 @@ For C++:
 
 Both will run the preprocessor (or some derivative of that) and compiler your objects at the same time.
 
+
+It should be noted that the ommision of the `-o outputObjectFile.o` in any of these will still produce an object file with the same name as your C/C++ file. In fact, it is customary to always name your object files the same as your source code file.
+
 ## Static Linking
 
 Back to the bridge analogy, your manufacturers have now created each part! However, the functionality of some of the parts does not make sense individually. There might be a protrusion, hole, fillet, or chamfer that each manufacture made, but they don't really know what the purpose of it. You do though, those features are supposed to function with the other parts, so your job now is to tell them how to assemble the bridge, how to use each feature they made. 
@@ -615,12 +618,66 @@ For C++:
 
 </div>
 
-All the code you wrote is resolved, it no longer needs to be translated by the machine to run a given segment of code.
+All the code you wrote is resolved, it no longer needs to be translated by the machine to run a given segment of code. To run this code, all you need to do is
+
+<div style="text-align: center">
+
+`./executableName`
+
+</div>
 
 By default, anything used within the standard library (STL) also be linked into your program. More specifically, it is statically linked to your executable. This means that your program will carry of copy of all the information you need to interact with the STL library. So at compile time, or when your computer finishes this entire process, libraries that are statically linked to your executable will be mapped to your program's memory along with the code you also wrote. This allows for quickly acessing those definitions/instructions defined in those libraries.
 
+---
+Interactive Problem 4:
+
+In the exercise folder, look for this chapter, and cd into this folder (If you are using Linux).
+
+Inspect these files. you will notice that:
+- `keep.cpp` increments an integer parameter `num` by 1 (It accomplishes this by passing by reference)
+- `meep.cpp` prints out meep a specified number of `times`
+- Both `keep.cpp` and `meep.cpp` have header files corresponding to them. These files have header guards.
+- `main.cpp` uses these files to run. This does not need a header file.
+
+a) Compile each file (Produce their .o files)
+b) Link the .o files into an executable named `prog`
+c) Run the executable. What is the output?
+d) Compile and link the files all in one step.
+
+
+Answers:
+
+a) The following commands can be run:
+
+`g++ -c keep.cpp -o keep.o` or `g++ -c keep.cpp`
+
+`g++ -c meep.cpp -o meep.o` or `g++ -c meep.cpp`
+
+`g++ -c main.cpp -o main.o` or `g++ -c main.cpp`
+
+b) The following command should be run (For your object file name of course)
+
+`g++ -o prog main.o keep.o meep.o`
+
+c) Running `./prog` will produce the following output:
+
+Meep! Meep! Meep! Meep! 
+Meep! Meep! Meep! Meep! Meep! Meep! 
+
+d) To compile and link all in one go, we just replace the `.o` in part b) with the actual source code:
+
+`g++ -o prog main.cpp keep.cpp meep.cpp`
+
+Now, I want you to run `make`, and watch as it automatically does this. If you want to get rid of the object files, run `make clean`. This is due to the magic of `Makefile`, a special kind of file that uses variables and rules to run terminal commands. For many projects, this included `Makefile` will be what you mostly need, so you're welcome.
+
+**WARNING:** If you have done this through git, do not commit and push to master!
+
+---
+
 
 ## Dynamic Linking
+
+**NOTE:** This section is optional, but it would be good for you to learn how this is done. In reality, there are many ways of doing dynamic linking, so take the next few instructions with a grain of salt.
 
 After this, your program is in its final form! You can run your program and it will be fine! However, there are some disadvantages to statically linking a libarary:
 
@@ -714,6 +771,8 @@ After that, you can run your program. When it runs into a definition/instruction
 3. Use - If the program does not use the shared library too much, the memory benefits will outweigh the cost for time needed to resolve the shared library. If not, well then, you should statically link your library.
 
 This is a very confusing topic, so I encourage you to read more about it. It is good to know, but as far as I currently know, it is not used within LOST. To see a working example of this, visit [this site](https://iq.opengenus.org/create-shared-library-in-cpp/#:~:text=There%20are%20four%20steps%3A%201%20Compile%20C%2B%2B%20library,Step%201%3A%20Compile%20C%20code%20to%20object%20file).
+
+
 
 ## In Conclusion
 

@@ -12,6 +12,7 @@ Also a nice read for new [Husky Satellite Lab](https://huskysat.org/) members!
 - [Numerical Representation](notes/numerical-representations.md)
 - [Primitive Data Types](notes/primitive-data-types.md)
 - [Advanced Data Types](notes/advanced-data-types.md)
+- [Compilation and Linkage](notes/compilation-and-linkage.md)
 - [Memory and Management](notes/memory-and-management.md)
 - [Copy Constructors](notes/cctor.md)
 - [Pointers](notes/pointer-basics.md)

@@ -1,5 +1,7 @@
 # Memory Management
 
+Contributors: Tri Nguyen
+
 ## Introduction to Memory
 
 When you remember something, how do you do it? You're probably thinking, "I just think about what I'm trying to remember". In reality, this question unconsiously sends signals to your brain to start scanning it. Therefore, your brain has to be:

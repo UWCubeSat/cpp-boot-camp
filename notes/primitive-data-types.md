@@ -171,7 +171,7 @@ This is arranged such that the resulting float/double number is:
 
 <div style="text-align: center">
 
-$$(-1)^{S_2}\times10^{E_2 - O_2}\times(1.M)_2$$
+$$(-1)^{S_2}\times2^{E_2 - O_2}\times(1.M)_2$$
 
 </div>
 
